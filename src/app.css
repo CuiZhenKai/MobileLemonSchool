@@ -1,0 +1,10 @@
+html{
+    touch-action: none;
+}
+body{
+    background: #fff;
+    overflow-x: hidden;
+}
+* {
+    touch-action: pan-y;
+} 
