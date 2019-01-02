@@ -9,22 +9,21 @@
 
 <script>
 export default {
-    name:'mymsg',
-    created(){
-        this.$store.state.showTabBar = false;
-    },
-    mounted(){
-        this.getRem(750,100);
-    },
-    methods:{
-        back(){
-            // console.log("1");
-            window.history.go(-1);
-        }
+  name: 'mymsg',
+  created () {
+    this.$store.state.showTabBar = false
+  },
+  mounted () {
+    this.getRem(750, 100)
+  },
+  methods: {
+    back () {
+      // console.log("1");
+      window.history.go(-1)
     }
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
 .hello{

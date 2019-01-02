@@ -7,22 +7,17 @@ import store from './store'
 import './assets/css/mui.min.css'
 import mui from './assets/js/mui.min.js'
 import './app.css'
-import {getRem} from './rem.js';
+import {getRem} from './rem.js'
 
-
-//导入请求数据所需要的插件
-import VueResource from 'vue-resource';
-//安装
-Vue.use(VueResource);
-
-
-
+// 导入请求数据所需要的插件
+import VueResource from 'vue-resource'
+// 安装
+Vue.use(VueResource)
 
 Vue.prototype.getRem = getRem
 Vue.prototype.mui = mui
 Vue.config.productionTip = false
 Vue.http.options.emulateJSON = true
-
 
 /* eslint-disable no-new */
 new Vue({

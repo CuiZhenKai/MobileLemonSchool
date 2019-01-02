@@ -18,7 +18,6 @@ import myLove from '@/components/SubComponents/MeSubComponents/myLove'
 import lemon from '@/components/SubComponents/MeSubComponents/lemon'
 import adviseUs from '@/components/SubComponents/MeSubComponents/adviseUs'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -26,104 +25,104 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      meta:{index:0},
+      meta: {index: 0},
       component: Home
     },
     {
       path: '/me',
       name: 'Me',
-      meta:{index:0},
+      meta: {index: 0},
       component: Me
     },
     {
       path: '/commit',
       name: 'Commit',
-      meta:{index:0},
+      meta: {index: 0},
       component: Commit
     },
     {
       path: '/wantbuy',
       name: 'Wantbuy',
-      meta:{index:0},
+      meta: {index: 0},
       component: Wantbuy
     },
     {
-      path:'/login',
-      name:'Login',
-      meta:{index:1},
-      component:Login
+      path: '/login',
+      name: 'Login',
+      meta: {index: 1},
+      component: Login
     },
     {
-      path:'/login/lemonLAndR',
-      name:'lemonLAndR',
-      meta:{index:1},
-      component:lemonLAndR
+      path: '/login/lemonLAndR',
+      name: 'lemonLAndR',
+      meta: {index: 1},
+      component: lemonLAndR
     },
     {
-      path:'/protocol',
-      name:'protocol',
-      meta:{index:2},
-      component:protocol
+      path: '/protocol',
+      name: 'protocol',
+      meta: {index: 2},
+      component: protocol
     },
     {
-      path:'/commit/commitSh',
-      name:'commitSh',
-      meta:{index:1},
-      component:commitSh
+      path: '/commit/commitSh',
+      name: 'commitSh',
+      meta: {index: 1},
+      component: commitSh
     },
     {
-      path:'/commit/shareJn',
-      name:'shareJn',
-      meta:{index:1},
-      component:shareJn
+      path: '/commit/shareJn',
+      name: 'shareJn',
+      meta: {index: 1},
+      component: shareJn
     },
     {
-      path:'/home/detail',
-      name:'detail',
-      meta:{index:1},
-      component:detail
+      path: '/home/detail',
+      name: 'detail',
+      meta: {index: 1},
+      component: detail
     },
     {
-      path:'/me/mymsg',
-      name:'mymsg',
-      meta:{index:1},
-      component:mymsg
+      path: '/me/mymsg',
+      name: 'mymsg',
+      meta: {index: 1},
+      component: mymsg
     },
     {
-      path:'/me/commitSh',
-      name:'commitSh',
-      meta:{index:1},
-      component:commitShEd
+      path: '/me/commitSh',
+      name: 'commitSh',
+      meta: {index: 1},
+      component: commitShEd
     },
     {
-      path:'/me/commitJn',
-      name:'commitJn',
-      meta:{index:1},
-      component:commitJn
+      path: '/me/commitJn',
+      name: 'commitJn',
+      meta: {index: 1},
+      component: commitJn
     },
     {
-      path:'/me/myLove',
-      name:'myLove',
-      meta:{index:1},
-      component:myLove
+      path: '/me/myLove',
+      name: 'myLove',
+      meta: {index: 1},
+      component: myLove
     },
     {
-      path:'/me/lemon',
-      name:'lemon',
-      meta:{index:1},
-      component:lemon
+      path: '/me/lemon',
+      name: 'lemon',
+      meta: {index: 1},
+      component: lemon
     },
     {
-      path:'/me/adviseUs',
-      name:'adviseUs',
-      meta:{index:1},
-      component:adviseUs
+      path: '/me/adviseUs',
+      name: 'adviseUs',
+      meta: {index: 1},
+      component: adviseUs
     },
     {
-      path:'/commit/commitSh/commitPic',
-      name:'commitPic',
-      meta:{index:3},
-      component:commitPic
+      path: '/commit/commitSh/commitPic',
+      name: 'commitPic',
+      meta: {index: 1},
+      component: commitPic
     }
   ]
 })

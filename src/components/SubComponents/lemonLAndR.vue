@@ -21,45 +21,44 @@
 </template>
 
 <script>
-import loginInput from '@/components/SubComponents/loginInput.vue';
-import registerInput from '@/components/SubComponents/registerInput.vue';
+import loginInput from '@/components/SubComponents/loginInput.vue'
+import registerInput from '@/components/SubComponents/registerInput.vue'
 export default {
-    name:'lemonLAndR',
-    data(){
-        return {
-            showLogin:true,
-            showRegister:false
-        }
-    },
-    created(){
-        this.$store.state.showTabBar = false;
-    },
-    mounted(){
-        this.getRem(750,100);
-    },
-    methods:{
-        back(){
-            // console.log("1");
-            window.history.go(-1);
-        },
-        showLoginInput(){
-            // console.log("登录")
-            this.showLogin = true;
-            this.showRegister = false;
-        },
-        showRegisterInput(){
-            // console.log("注册");
-            this.showRegister = true;
-            this.showLogin  = false;
-        }
-    },
-    components:{
-        loginInput,
-        registerInput
+  name: 'lemonLAndR',
+  data () {
+    return {
+      showLogin: true,
+      showRegister: false
     }
+  },
+  created () {
+    this.$store.state.showTabBar = false
+  },
+  mounted () {
+    this.getRem(750, 100)
+  },
+  methods: {
+    back () {
+      // console.log("1");
+      window.history.go(-1)
+    },
+    showLoginInput () {
+      // console.log("登录")
+      this.showLogin = true
+      this.showRegister = false
+    },
+    showRegisterInput () {
+      // console.log("注册");
+      this.showRegister = true
+      this.showLogin = false
+    }
+  },
+  components: {
+    loginInput,
+    registerInput
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
 .hello{

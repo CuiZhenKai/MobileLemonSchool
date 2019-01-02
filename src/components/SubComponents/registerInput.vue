@@ -26,111 +26,109 @@
     </div>
 </template>
 
-
 <script>
 import config from '@/config'
 export default {
-    name:'loginInput',
-    data(){
-        return {
-            docmHeight:document.documentElement.clientHeight, //默认屏幕高度
-            showHeight:document.documentElement.clientHeight, //实时屏幕的高度
-            hideShow:true,
-            lemonnumber:'',
-            lemonpass:'',
-            repeatlemonpass:'',
-            email:'',
-            phoneNumber:''
-        }
-    },
-    mounted(){
-        // window.Onresize 监听页面的变化
-        window.onresize = ()=>{
-            return (()=>{
-                this.showHeight = document.body.clientHeight;
-            })();
-        }
-        this.mui.init({
-            swipe:back
-        })
-    },
-    methods:{
-        login(){
-            // console.log("1");
-            // alert("1");
-            // this.mui.alert('欢迎使用Hello MUI', 'Hello MUI');
-            if(!this.lemonnumber){
-                this.mui.toast('请输入用户名');
-                return;
-            }
-            if(!this.lemonpass){
-                this.mui.toast('请输入密码');
-                return;
-            }
-            if(this.lemonpass != this.repeatlemonpass){
-                this.mui.toast('两次的密码不一致');
-                return;
-            }
-            if(!this.phoneNumber){
-                this.mui.toast('手机号为必填项');
-                return;
-            }else{
-                let regPhone = /^1(3|4|5|7|8)\d{9}$/;
-                let isRightPhone = regPhone.test(this.phoneNumber);
-                if(!isRightPhone){
-                    this.mui.toast('手机号码格式不正确');
-                    return;
-                }
-            }
-            if(this.email){
-                let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-                let isRight = reg.test(this.email);
-                // console.log(isRight);
-                if(!isRight){
-                    this.mui.toast('邮箱格式不正确');
-                    return;
-                }
-            }
-            //全部信息输入完成
-            //登录逻辑
-            // console.log("1");
-            let data = {
-                username:this.lemonnumber,
-                userpass:this.lemonpass,
-                phonenum:this.phoneNumber,
-                email:this.email
-            }
-            this.$http.post(`${config.host}/shops/Home/Login/register`,data)
-                .then(result=>{
-                    // console.log(result.body.status,result.body.message);
-                    let code = result.body.status;
-                    let message = result.body.message;
-                    switch (code) {
-                        case 1:
-                            this.mui.toast(`${result.body.message},点击登录按钮,进行登录`);
-                            localStorage.setItem('registerName',this.lemonnumber);
-                            break;
-                        case 0:
-                            this.mui.toast(result.body.message);
-                    }
-                },(error)=>{
-                    // console.log(error);
-                    this.mui.toast('注册失败,网络服务器未知错误');
-                })
-        }
-    },
-    watch:{
-        showHeight:function() {
-            if(this.docmHeight > this.showHeight){
-                this.hideShow=false
-            }else{
-                this.hideShow=true
-            }
-        }
+  name: 'loginInput',
+  data () {
+    return {
+      docmHeight: document.documentElement.clientHeight, // 默认屏幕高度
+      showHeight: document.documentElement.clientHeight, // 实时屏幕的高度
+      hideShow: true,
+      lemonnumber: '',
+      lemonpass: '',
+      repeatlemonpass: '',
+      email: '',
+      phoneNumber: ''
     }
+  },
+  mounted () {
+    // window.Onresize 监听页面的变化
+    window.onresize = () => {
+      return (() => {
+        this.showHeight = document.body.clientHeight
+      })()
+    }
+    this.mui.init({
+      swipe: back
+    })
+  },
+  methods: {
+    login () {
+      // console.log("1");
+      // alert("1");
+      // this.mui.alert('欢迎使用Hello MUI', 'Hello MUI');
+      if (!this.lemonnumber) {
+        this.mui.toast('请输入用户名')
+        return
+      }
+      if (!this.lemonpass) {
+        this.mui.toast('请输入密码')
+        return
+      }
+      if (this.lemonpass != this.repeatlemonpass) {
+        this.mui.toast('两次的密码不一致')
+        return
+      }
+      if (!this.phoneNumber) {
+        this.mui.toast('手机号为必填项')
+        return
+      } else {
+        let regPhone = /^1(3|4|5|7|8)\d{9}$/
+        let isRightPhone = regPhone.test(this.phoneNumber)
+        if (!isRightPhone) {
+          this.mui.toast('手机号码格式不正确')
+          return
+        }
+      }
+      if (this.email) {
+        let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
+        let isRight = reg.test(this.email)
+        // console.log(isRight);
+        if (!isRight) {
+          this.mui.toast('邮箱格式不正确')
+          return
+        }
+      }
+      // 全部信息输入完成
+      // 登录逻辑
+      // console.log("1");
+      let data = {
+        username: this.lemonnumber,
+        userpass: this.lemonpass,
+        phonenum: this.phoneNumber,
+        email: this.email
+      }
+      this.$http.post(`${config.host}/shops/Home/Login/register`, data)
+        .then(result => {
+          // console.log(result.body.status,result.body.message);
+          let code = result.body.status
+          let message = result.body.message
+          switch (code) {
+            case 1:
+              this.mui.toast(`${result.body.message},点击登录按钮,进行登录`)
+              localStorage.setItem('registerName', this.lemonnumber)
+              break
+            case 0:
+              this.mui.toast(result.body.message)
+          }
+        }, (error) => {
+          // console.log(error);
+          this.mui.toast('注册失败,网络服务器未知错误')
+        })
+    }
+  },
+  watch: {
+    showHeight: function () {
+      if (this.docmHeight > this.showHeight) {
+        this.hideShow = false
+      } else {
+        this.hideShow = true
+      }
+    }
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
     .helloLogin{

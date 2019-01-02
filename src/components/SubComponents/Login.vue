@@ -27,22 +27,21 @@
     </div>
 </template>
 
-
 <script>
 export default {
-    name:'login',
-    created(){
-        this.$store.state.showTabBar = false;
-    },
-    mounted(){
-        this.getRem(750,100);
-    },
-    methods:{
-        anyway(){
-            // console.log("1");
-            window.location.href = '#/';
-        }
+  name: 'login',
+  created () {
+    this.$store.state.showTabBar = false
+  },
+  mounted () {
+    this.getRem(750, 100)
+  },
+  methods: {
+    anyway () {
+      // console.log("1");
+      window.location.href = '#/'
     }
+  }
 }
 </script>
 
@@ -141,4 +140,3 @@ export default {
         }
     }
 </style>
-

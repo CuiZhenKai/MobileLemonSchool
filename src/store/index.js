@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const state = {
-    showTabBar:true
-};
+  showTabBar: true
+}
 
 export default new Vuex.Store({
-    state
+  state
 })

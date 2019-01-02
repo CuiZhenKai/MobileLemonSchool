@@ -24,19 +24,19 @@
 <script>
 import headers from '@/components/SubComponents/headers'
 export default {
-  data(){
+  data () {
     return {
-      commit:'发布',
-      showTab:false
+      commit: '发布',
+      showTab: false
     }
   },
-  mounted(){
-    this.getRem(750,100);
+  mounted () {
+    this.getRem(750, 100)
   },
-  created(){
-    this.$store.state.showTabBar = true;
+  created () {
+    this.$store.state.showTabBar = true
   },
-  components:{
+  components: {
     headers
   }
 }
@@ -45,7 +45,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   .hello{
-    
+
     .commit{
       margin-top:1.2rem;
     }

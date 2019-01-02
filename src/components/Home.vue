@@ -33,21 +33,21 @@
 <script>
 import headers from '@/components/SubComponents/headers'
 export default {
-  data(){
+  data () {
     return {
-      home:'专注校园二手',
-      show:true,
-      showTab:true
+      home: '专注校园二手',
+      show: true,
+      showTab: true
     }
   },
-  components:{
+  components: {
     headers
   },
-  mounted(){
-    this.getRem(750,100);
+  mounted () {
+    this.getRem(750, 100)
   },
-  created(){
-    this.$store.state.showTabBar = true;
+  created () {
+    this.$store.state.showTabBar = true
   }
 }
 </script>

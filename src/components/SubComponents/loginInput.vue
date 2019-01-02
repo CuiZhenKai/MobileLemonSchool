@@ -17,88 +17,88 @@
     </div>
 </template>
 
-
 <script>
 import config from '@/config'
 export default {
-    name:'loginInput',
-    data(){
-        return {
-            docmHeight:document.documentElement.clientHeight, //默认屏幕高度
-            showHeight:document.documentElement.clientHeight, //实时屏幕的高度
-            hideShow:true,
-            lemonnumber:'',
-            lemonpass:''
-        }
-    },
-    created(){
-        this.getLocalStorage();
-    },
-    mounted(){
-        // window.Onresize 监听页面的变化
-        window.onresize = ()=>{
-            return (()=>{
-                this.showHeight = document.body.clientHeight;
-            })();
-        }
-        this.mui.init({
-            swipe:back
+  name: 'loginInput',
+  data () {
+    return {
+      docmHeight: document.documentElement.clientHeight, // 默认屏幕高度
+      showHeight: document.documentElement.clientHeight, // 实时屏幕的高度
+      hideShow: true,
+      lemonnumber: '',
+      lemonpass: ''
+    }
+  },
+  created () {
+    this.getLocalStorage()
+  },
+  mounted () {
+    // window.Onresize 监听页面的变化
+    window.onresize = () => {
+      return (() => {
+        this.showHeight = document.body.clientHeight
+      })()
+    }
+    this.mui.init({
+      swipe: back
+    })
+  },
+  methods: {
+    login () {
+      // console.log("1");
+      // alert("1");
+      // this.mui.alert('欢迎使用Hello MUI', 'Hello MUI');
+      if (!this.lemonnumber) {
+        this.mui.toast('请输入用户名')
+        return
+      }
+      if (!this.lemonpass) {
+        this.mui.toast('请输入密码')
+        return
+      }
+      let data = {
+        username: this.lemonnumber,
+        userpass: this.lemonpass
+      }
+      this.$http.post(`${config.host}/shops/Home/Login/index`, data)
+        .then(result => {
+          let code = result.body.status
+          let message = result.body.message
+          let userid = result.body.userid
+          switch (code) {
+            case 1:
+              this.mui.toast(`<span class="mui-spinner"></span><br />正在登录`, {duraion: 2700})
+              localStorage.setItem('registerName', this.lemonnumber)
+              localStorage.setItem('userid', userid)
+              window.setTimeout(() => {
+                this.mui.toast(`登录成功,欢迎您${this.lemonnumber}`)
+                this.$router.push('/')
+              }, 2700)
+              break
+            case 0:
+              this.mui.toast(result.body.message)
+          }
+        }, (error) => {
+          console.log(error)
         })
     },
-    methods:{
-        login(){
-            // console.log("1");
-            // alert("1");
-            // this.mui.alert('欢迎使用Hello MUI', 'Hello MUI');
-            if(!this.lemonnumber){
-               this.mui.toast('请输入用户名');
-                return;
-            }
-            if(!this.lemonpass){
-                this.mui.toast('请输入密码');
-                return;
-            }
-            let data = {
-                username:this.lemonnumber,
-                userpass:this.lemonpass
-            }
-            this.$http.post(`${config.host}/shops/Home/Login/index`,data)
-                .then(result=>{
-                    let code = result.body.status;
-                    let message = result.body.message;
-                    let userid = result.body.userid;
-                    switch (code) {
-                        case 1:
-                            this.mui.toast(`${result.body.message},正在跳转到首页面`);
-                            localStorage.setItem('registerName',this.lemonnumber);
-                            localStorage.setItem('userid',userid);
-                            this.$router.push('/')
-                            break;
-                        case 0:
-                            this.mui.toast(result.body.message);
-                    }
-                },(error)=>{
-                    console.log(error);
-                })
-
-        },
-        getLocalStorage(){
-            let username = localStorage.getItem('registerName');
-            this.lemonnumber = username;
-        }
-    },
-    watch:{
-        showHeight:function() {
-            if(this.docmHeight > this.showHeight){
-                this.hideShow=false
-            }else{
-                this.hideShow=true
-            }
-        }
+    getLocalStorage () {
+      let username = localStorage.getItem('registerName')
+      this.lemonnumber = username
     }
+  },
+  watch: {
+    showHeight: function () {
+      if (this.docmHeight > this.showHeight) {
+        this.hideShow = false
+      } else {
+        this.hideShow = true
+      }
+    }
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
     .helloLogin{

@@ -11,25 +11,24 @@
 <script>
 import inputMsg from '@/components/SubComponents/MeSubComponents/inputMsg.vue'
 export default {
-    name:'mymsg',
-    created(){
-        this.$store.state.showTabBar = false;
-    },
-    mounted(){
-        this.getRem(750,100);
-    },
-    methods:{
-        back(){
-            // console.log("1");
-            window.history.go(-1);
-        }
-    },
-    components:{
-        inputMsg
+  name: 'mymsg',
+  created () {
+    this.$store.state.showTabBar = false
+  },
+  mounted () {
+    this.getRem(750, 100)
+  },
+  methods: {
+    back () {
+      // console.log("1");
+      window.history.go(-1)
     }
+  },
+  components: {
+    inputMsg
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
 .hello{

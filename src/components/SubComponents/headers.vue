@@ -33,50 +33,56 @@
             <a href="#loginAndOut" id="username" class="mui-pull-right">{{usernames}}</a>
         </header>
     </div>
-    
+
 </template>
 
 <script>
 export default {
-    data(){
-        return {
-            usernames:'',
-            showLogin:false
-        }
-    },
-    props:['data','home','tab'],
-    mounted(){
-        this.getRem(750,100);
-    },
-    created(){
-        this.getLocalStorage();
-    },
-    methods:{
-        getLocalStorage(){
-            let username = localStorage.getItem('registerName');
-            if(username){
-                this.usernames = username;
-                this.showLogin = true;
-            }else{
-                this.usernames = '未登录';
-                this.showLogin = false;
-            }
-        },
-        wantLogin(){
-            this.$router.push('/login');
-        },
-        logout(){
-            this.mui.confirm('确定退出柠檬校园吗','柠檬校园',(e)=>{
-                // console.log(e);
-                if(e.index == 1){
-                    localStorage.removeItem('registerName');
-                    this.mui.toast('已退出登录');
-                }else{
-                    this.mui.toast('取消退出登录');
-                }
-            });
-        }
+  inject: ['reload'],
+  data () {
+    return {
+      usernames: '',
+      showLogin: false
     }
+  },
+  props: ['data', 'home', 'tab'],
+  mounted () {
+    this.getRem(750, 100)
+  },
+  created () {
+    this.getLocalStorage()
+  },
+  methods: {
+    getLocalStorage () {
+      let username = localStorage.getItem('registerName')
+      if (username) {
+        this.usernames = username
+        this.showLogin = true
+      } else {
+        this.usernames = '未登录'
+        this.showLogin = false
+      }
+    },
+    wantLogin () {
+      this.$router.push('/login')
+      this.reload()
+    },
+    logout () {
+      this.mui.confirm('确定退出柠檬校园吗', '柠檬校园', (e) => {
+        // console.log(e);
+        if (e.index == 1) {
+          localStorage.removeItem('registerName')
+          this.mui.toast(`<span class="mui-spinner"></span><br />正在注销`, {duraion: 2700})
+          window.setTimeout(() => {
+            this.mui.toast('已退出登录')
+          }, 2700)
+          this.reload()
+        } else {
+          this.mui.toast('取消退出登录')
+        }
+      })
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

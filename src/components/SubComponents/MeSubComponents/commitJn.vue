@@ -29,42 +29,41 @@
 </template>
 
 <script>
-import config from '@/config';
+import config from '@/config'
 export default {
-    name:'mycommitjn',
-    data(){
-        return {
-            userid:''
-        }
-    },
-    created(){
-        this.$store.state.showTabBar = false;
-        this.getLocalStorage();
-        this.getAllSkillList();
-    },
-    mounted(){
-        this.getRem(750,100);
-    },
-    methods:{
-        back(){
-            // console.log("1");
-            window.history.go(-1);
-        },
-        getLocalStorage(){
-            let id = localStorage.getItem('userid');
-            this.userid = id;
-        },
-        getAllSkillList(){
-            console.log('userid'+this.userid);
-            this.$http.get(`${config.host}/shops/Home/Skill/lst?userid=${this.userid}`)
-                .then(result=>{
-                    console.log(result.body);
-                })
-        }
+  name: 'mycommitjn',
+  data () {
+    return {
+      userid: ''
     }
+  },
+  created () {
+    this.$store.state.showTabBar = false
+    this.getLocalStorage()
+    this.getAllSkillList()
+  },
+  mounted () {
+    this.getRem(750, 100)
+  },
+  methods: {
+    back () {
+      // console.log("1");
+      window.history.go(-1)
+    },
+    getLocalStorage () {
+      let id = localStorage.getItem('userid')
+      this.userid = id
+    },
+    getAllSkillList () {
+      console.log('userid' + this.userid)
+      this.$http.get(`${config.host}/shops/Home/Skill/lst?userid=${this.userid}`)
+        .then(result => {
+          console.log(result.body)
+        })
+    }
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
 .hello{

@@ -7,8 +7,8 @@
 		  </div>
     </div>
     <div class="asc">
-        <span class="left">随机<span class="mui-icon mui-icon-pulldown"></span></span>
-        <span class="right">时间<span class="mui-icon mui-icon-pulldown"></span></span>
+        <span class="left" @click="randomShow">随机<span class="mui-icon mui-icon-pulldown"></span></span>
+        <span class="right" @click="timeShow">时间<span class="mui-icon mui-icon-pulldown"></span></span>
     </div>
     <div class="mui-card" v-for="item in skillList" :key="item.id">
 				<div class="mui-card-header mui-card-media">
@@ -40,39 +40,45 @@
 import config from '@/config'
 import headers from '@/components/SubComponents/headers'
 export default {
-  data(){
+  data () {
     return {
-      wantbuy:'技能',
-      show:false,
-      showTab:true,
-      skillList:[]
+      wantbuy: '技能',
+      show: false,
+      showTab: true,
+      skillList: []
     }
   },
-  mounted(){
-    this.getRem(750,100);
+  mounted () {
+    this.getRem(750, 100)
     this.mui.init({
-        swipe:back
+      swipe: back
     })
   },
-  created(){
-    this.$store.state.showTabBar = true;
-    this.getAllSkillList();
-    console.log(this.skillList);
+  created () {
+    this.$store.state.showTabBar = true
+    this.getAllSkillList()
+    // console.log(this.skillList);
   },
-  components:{
+  components: {
     headers
   },
-  methods:{
-    getAllSkillList(){
-      this.$http.get(`${config.host}/shops/Home/Skill/lst`)
-      .then(result=>{
-        console.log(result.body);
-        if(result.body.length==0){
-          this.mui.toast('获取数据失败');
-        }else{
-          this.skillList = result.body;
-        }
-      })
+  methods: {
+    getAllSkillList () {
+      this.$http.get(`${config.host}/shops/Home/Skill/lst`, {params: {type: 'mobile'}})
+        .then(result => {
+          console.log(result.body)
+          if (result.body.length == 0) {
+            this.mui.toast('获取数据失败')
+          } else {
+            this.skillList = result.body
+          }
+        })
+    },
+    randomShow () {
+      // console.log("随机排序");
+    },
+    timeShow () {
+      // console.log("时间排序");
     }
   }
 }

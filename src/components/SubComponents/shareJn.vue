@@ -47,7 +47,7 @@
                 <div class="lemon-button-row">
                     <button type="button" class="mui-btn mui-btn-primary muiBtn-qq" @click="shareSkill">分享</button>
                 </div>
-                
+
             </form>
         </div>
     </div>
@@ -56,123 +56,122 @@
 <script>
 import config from '@/config'
 export default {
-    name:'shareJn',
-    data(){
-        return {
-            skillIntro:'',
-            skillSalary:'',
-            skillPhoneNumber:'',
-            skillQQNumber:'',
-            skillTab:'',
-            userid:'',
-            userNamesUnderAvatar:''
+  name: 'shareJn',
+  data () {
+    return {
+      skillIntro: '',
+      skillSalary: '',
+      skillPhoneNumber: '',
+      skillQQNumber: '',
+      skillTab: '',
+      userid: '',
+      userNamesUnderAvatar: ''
+    }
+  },
+  created () {
+    this.$store.state.showTabBar = false
+    this.getLocalStorage()
+  },
+  mounted () {
+    this.getRem(750, 100)
+    this.mui.init({
+      swipe: back
+    })
+  },
+  methods: {
+    back () {
+      // console.log("1");
+      window.history.go(-1)
+    },
+    getLocalStorage () {
+      let username = localStorage.getItem('registerName')
+      let id = localStorage.getItem('userid')
+      this.userid = id
+      if (username) {
+        this.userNamesUnderAvatar = username
+      } else {
+        this.userNamesUnderAvatar = '未登录'
+      }
+    },
+    shareSkill () {
+      if (!this.skillIntro) {
+        this.mui.toast('请输入技能概述')
+        return
+      }
+      if (!this.skillSalary) {
+        this.mui.toast('请输入心仪的佣金')
+        return
+      }
+      if (!this.skillPhoneNumber && !this.skillQQNumber) {
+        this.mui.toast('请输入QQ或者手机号中的其中一个')
+        return
+      }
+      if (this.skillPhoneNumber) {
+        let regPhone = /^1(3|4|5|7|8)\d{9}$/
+        let isRightPhone = regPhone.test(this.skillPhoneNumber)
+        if (!isRightPhone) {
+          this.mui.toast('手机号码格式不正确')
+          return
         }
-    },
-    created(){
-        this.$store.state.showTabBar = false;
-        this.getLocalStorage();
-    },
-    mounted(){
-        this.getRem(750,100);
-        this.mui.init({
-            swipe:back
+      }
+      if (this.skillQQNumber) {
+        let regPhone = /^[1-9][0-9]{4,9}$/gim
+        let isRightPhone = regPhone.test(this.skillQQNumber)
+        if (!isRightPhone) {
+          this.mui.toast('QQ号码格式不正确')
+          return
+        }
+      }
+      if (!this.skillTab) {
+        this.mui.toast('请选择技能种类的其中一个')
+        return
+      }
+      // console.log("进行分享");
+      let timeNow = this.getTime()
+      let data = {
+        userid: this.userid,
+        username: this.userNamesUnderAvatar,
+        time: timeNow,
+        skillintro: this.skillIntro,
+        skillphonenumber: this.skillPhoneNumber,
+        skillqqnumber: this.skillQQNumber,
+        skilltab: this.skillTab,
+        skillsalary: this.skillSalary
+      }
+      // console.log(data);
+      this.$http.post(`${config.host}/shops/Home/Skill/add`, data)
+        .then(result => {
+          // console.log(result);
+          if (result.body.status === 1) {
+            this.mui.toast(result.body.message)
+            this.$router.push('/wantbuy')
+          } else {
+            this.mui.toast(result.body.message)
+          }
+        }, (error) => {
+
         })
     },
-    methods:{
-        back(){
-            // console.log("1");
-            window.history.go(-1);
-        },
-        getLocalStorage(){
-            let username = localStorage.getItem('registerName');
-            let id = localStorage.getItem('userid');
-            this.userid = id;
-            if(username){
-                this.userNamesUnderAvatar = username;
-            }else{
-                this.userNamesUnderAvatar = '未登录';
-            }
-        },
-        shareSkill(){
-            if(!this.skillIntro){
-                this.mui.toast('请输入技能概述');
-                return;
-            }
-            if(!this.skillSalary){
-                this.mui.toast('请输入心仪的佣金');
-                return;
-            }
-            if(!this.skillPhoneNumber&&!this.skillQQNumber){
-                this.mui.toast('请输入QQ或者手机号中的其中一个');
-                return;
-            }
-            if(this.skillPhoneNumber){
-                let regPhone = /^1(3|4|5|7|8)\d{9}$/;
-                let isRightPhone = regPhone.test(this.skillPhoneNumber);
-                if(!isRightPhone){
-                    this.mui.toast('手机号码格式不正确');
-                    return;
-                }
-            }
-            if(this.skillQQNumber){
-                let regPhone = /^[1-9][0-9]{4,9}$/gim;
-                let isRightPhone = regPhone.test(this.skillQQNumber);
-                if(!isRightPhone){
-                    this.mui.toast('QQ号码格式不正确');
-                    return;
-                }
-            }
-            if(!this.skillTab){
-                this.mui.toast('请选择技能种类的其中一个');
-                return;
-            }
-            // console.log("进行分享");
-            let timeNow = this.getTime();
-            let data = {
-                userid:this.userid,
-                username:this.userNamesUnderAvatar,
-                time:timeNow,
-                skillintro:this.skillIntro,
-                skillphonenumber:this.skillPhoneNumber,
-                skillqqnumber:this.skillQQNumber,
-                skilltab:this.skillTab,
-                skillsalary:this.skillSalary
-            }
-            // console.log(data);
-            this.$http.post(`${config.host}/shops/Home/Skill/add`,data)
-                .then(result=>{
-                    // console.log(result);
-                    if(result.body.status===1){
-                        this.mui.toast(result.body.message);
-                        this.$router.push('/wantbuy');
-                    }else{
-                        this.mui.toast(result.body.message);
-                    }
-                },(error)=>{
-
-                });
-        },
-        getTime(){
-            let date = new Date();
-            let seperator1 = "-";
-            let seperator2 = ":";
-            let month = date.getMonth() + 1;
-            let strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-                    + " " + date.getHours() + seperator2 + date.getMinutes()
-                    + seperator2 + date.getSeconds();
-            return currentdate;
-        }
+    getTime () {
+      let date = new Date()
+      let seperator1 = '-'
+      let seperator2 = ':'
+      let month = date.getMonth() + 1
+      let strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+                    ' ' + date.getHours() + seperator2 + date.getMinutes() +
+                    seperator2 + date.getSeconds()
+      return currentdate
     }
+  }
 }
 </script>
-
 
 <style lang="less" scoped>
 .hello{

@@ -5,7 +5,7 @@
       <div class="avatarAndName">
         <div class="avatar">
           <router-link to="/login" v-if="logined"><img src="../assets/lemon.svg" alt="头像"></router-link>
-          <img src="../assets/lemon.svg" alt="头像" v-if="!logined" >
+          <img src="../assets/lemon.svg" alt="头像" v-if="!logined" @click="changAvatar" >
         </div>
         <p>{{userNamesUnderAvatar}}</p>
         <p>{{userData.signname}}</p>
@@ -31,7 +31,7 @@
           <router-link to='/me/adviseUs' class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
 		              <span class="mui-icon mui-icon-paperplane"></span>
 		              <div class="mui-media-body">意见反馈</div></a></router-link>
-		  </ul> 
+		  </ul>
     </div>
   </div>
 </template>
@@ -40,46 +40,49 @@
 import config from '@/config'
 import headers from '@/components/SubComponents/headers'
 export default {
-  name:'me',
-  data(){
+  name: 'me',
+  data () {
     return {
-      userNamesUnderAvatar:'',
-      me:'个人中心',
-      showTab:false,
-      userid:'',
-      userData:{},
-      logined:false
+      userNamesUnderAvatar: '',
+      me: '个人中心',
+      showTab: false,
+      userid: '',
+      userData: {},
+      logined: false
     }
   },
-  mounted(){
-    this.getRem(750,100);
+  mounted () {
+    this.getRem(750, 100)
   },
-  created(){
-    this.$store.state.showTabBar = true;
-    this.getLocalStorage();
+  created () {
+    this.$store.state.showTabBar = true
+    this.getLocalStorage()
   },
-  methods:{
-    getUserMsg(){
+  methods: {
+    getUserMsg () {
       this.$http.get(`${config.host}/shops/Home/User/edit?userid=${this.userid}`)
-          .then(result=>{
-              this.userData = result.body;
-          })
+        .then(result => {
+          this.userData = result.body
+        })
     },
-    getLocalStorage(){
-      let username = localStorage.getItem('registerName');
-      let id = localStorage.getItem('userid');
-      this.userid = id;
-      if(username){
-        this.userNamesUnderAvatar = username;
-        this.getUserMsg();
-        this.logined = false;
-      }else{
-        this.userNamesUnderAvatar = '未登录';
-        this.logined = true;
+    getLocalStorage () {
+      let username = localStorage.getItem('registerName')
+      let id = localStorage.getItem('userid')
+      this.userid = id
+      if (username) {
+        this.userNamesUnderAvatar = username
+        this.getUserMsg()
+        this.logined = false
+      } else {
+        this.userNamesUnderAvatar = '未登录'
+        this.logined = true
       }
+    },
+    changAvatar () {
+      console.log('更改头像')
     }
   },
-  components:{
+  components: {
     headers
   }
 }
