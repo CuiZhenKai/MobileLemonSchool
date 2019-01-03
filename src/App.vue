@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 	<transition :name="transitionName">
-		<router-view v-if="isRouterAlive"/>
+			<router-view v-if="isRouterAlive"/>
 	</transition>
     <nav class="mui-bar mui-bar-tab" v-if="$store.state.showTabBar">
 			<a class="mui-tab-item" @click="toHome">
@@ -21,6 +21,7 @@
 				<span class="mui-tab-label">我的</span>
 			</a>
 	</nav>
+	
   </div>
 </template>
 

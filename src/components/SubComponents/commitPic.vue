@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import config from '@/config'
 export default {
   name: 'ComUpLoad',
   data () {
@@ -77,12 +78,15 @@ export default {
         time:timeNow
       }
       console.log(data);
-      // this.$http.post(`${config.host}/shops/Home/index/add`,data)
-      //   .then(result=>{
-      //     if(result.body.status===1){
-      //         this.$router.push('/commit/commitSh/commitPic');
-      //     }
-      //   })
+      this.$http.post(`${config.host}/shops/Home/index/add`,data)
+        .then(result=>{
+          if(result.body.status===1){
+              this.mui.toast(result.body.message);
+              this.$router.push({name:'Home'});
+          }else{
+              this.mui.toast('发布失败');
+          }
+        })
     },
     changeImg: function (e) {
       var _this = this

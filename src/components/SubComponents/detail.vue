@@ -15,34 +15,28 @@
                     <!-- 这是头像 -->
 					<img src="@/assets/me.png" />
 					<div class="mui-media-body">
-						上传人:上传人姓名
-						<p>上传时间:2018-10-1 09:00:00</p>
+						上传人:{{detailMsg.username}}
+						<p>上传时间:{{detailMsg.time}}</p>
 					</div>
 				</div>
                 <div class="mui-card-content-inner">
 						<p>商品概述:</p>
-						<p style="color: #333;">我是商品概述概述概述我是技能概述概述概述我是技能概述概述概述</p>
+						<p style="color: #333;">{{detailMsg.prointro}}</p>
                         <p>联系方式:</p>
-						<p style="color: #333;">手机号:13245382620</p>
-                        <p style="color: #333;">QQ号:526512587</p>
+						<p style="color: #333;">手机号:{{detailMsg.prophonenum?detailMsg.prophonenum:'暂无'}}</p>
+                        <p style="color: #333;">QQ号:{{detailMsg.proqqnum?detailMsg.proqqnum:'暂无'}}</p>
 				</div>
 				<div class="mui-card-footer">
 					<a class="mui-card-link">喜欢</a>
-					<a class="mui-card-link">￥12</a>
+					<a class="mui-card-link">￥{{detailMsg.prosalary}}</a>
 				</div>
 		</div>
-        <!-- <div class="imgCard">
-            <p class="titleCenter">商品图片展示</p>
-            <img class="imgPro" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg" alt="">
-            <img class="imgPro" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg" alt="">
-            <img class="imgPro" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg" alt="">
-            <img class="imgPro" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg" alt="">
-        </div> -->
     </div>
     <!-- 用户上传的轮播图 价格 商品标题 商品描述 时间  浏览量 头像 账户名 联系方式 -->
 </template>
 
 <script>
+import config from '@/config'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
@@ -56,11 +50,15 @@ export default {
           el: '.swiper-pagination'// 分页器
         }
       },
-      swiperSlides: ['https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg', 'https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=2368356775,1167441498&fm=85&s=F213A06667BA07804C4E9D880200A09B', 'https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=2368356775,1167441498&fm=85&s=F213A06667BA07804C4E9D880200A09B', 'https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=1110157176,56958821&fm=85&s=5CA63D724B6A45201E7C94CA0000C0B3']
+      swiperSlides: ['https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2851444697,1735806542&fm=27&gp=0.jpg', 'https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=2368356775,1167441498&fm=85&s=F213A06667BA07804C4E9D880200A09B', 'https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=2368356775,1167441498&fm=85&s=F213A06667BA07804C4E9D880200A09B', 'https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=1110157176,56958821&fm=85&s=5CA63D724B6A45201E7C94CA0000C0B3'],
+      id:'',
+      detailMsg:{}
     }
   },
   created () {
-    this.$store.state.showTabBar = false
+    this.$store.state.showTabBar = false;
+    this.id = this.$route.query.id;
+    this.getDetailMsg();
   },
   mounted () {
     this.getRem(750, 100)
@@ -72,6 +70,13 @@ export default {
     back () {
       // console.log("1");
       window.history.go(-1)
+    },
+    getDetailMsg(){
+        this.$http.get(`${config.host}/shops/Home/index/itemlst`,{params:{id:this.id}})
+        .then(result => {
+            // console.log(result);
+            this.detailMsg = result.body;
+        })
     }
   },
   components: {

@@ -1,5 +1,5 @@
-<template>
-  <div class="hello">
+<template> 
+  <div class="hello" ref="wantbuy">
     <headers :data='wantbuy' :home='show' :tab='showTab'></headers>
     <div class="skillListDetail">
       <div class="mui-input-row mui-search">
@@ -9,6 +9,9 @@
     <div class="asc">
         <span class="left" @click="randomShow">随机<span class="mui-icon mui-icon-pulldown"></span></span>
         <span class="right" @click="timeShow">时间<span class="mui-icon mui-icon-pulldown"></span></span>
+    </div>
+    <div class="toTop" @click="handeltoTop">
+      <span class="mui-icon mui-icon-arrowthinup"></span>
     </div>
     <div class="mui-card" v-for="item in skillList" :key="item.id">
 				<div class="mui-card-header mui-card-media">
@@ -52,12 +55,21 @@ export default {
     this.getRem(750, 100)
     this.mui.init({
       swipe: back
-    })
+    });
+    // this.wantbuyBox = this.$refs.wantbuy;
+    // this.wantbuyBox.addEventListener('scroll',()=>{
+    //     console.log(" scroll ")
+    // },true);
+    // window.addEventListener('scroll',()=>{
+    //   console.log("1");
+    // })
+    window.addEventListener('scroll',()=>{
+      console.log("1");
+    },true)
   },
   created () {
     this.$store.state.showTabBar = true
-    this.getAllSkillList()
-    // console.log(this.skillList);
+    this.getAllSkillList();
   },
   components: {
     headers
@@ -66,7 +78,6 @@ export default {
     getAllSkillList () {
       this.$http.get(`${config.host}/shops/Home/Skill/lst`, {params: {type: 'mobile'}})
         .then(result => {
-          console.log(result.body)
           if (result.body.length == 0) {
             this.mui.toast('获取数据失败')
           } else {
@@ -79,6 +90,12 @@ export default {
     },
     timeShow () {
       // console.log("时间排序");
+    },
+    handleScroll(){
+      //监听滚动事件
+    },
+    handeltoTop(){
+      document.documentElement.scrollTop = 0;
     }
   }
 }
@@ -87,6 +104,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   .hello{
+    overflow: scroll;
+    .toTop{
+      width: 1rem;
+      height: 1rem;
+      background-color: orange;
+      text-align: center;
+      line-height: 1rem;
+      border-radius: 50%;
+      color:#fff;
+      position: fixed;
+      bottom: 4rem;
+      right: .2rem;
+      font-weight: bolder;
+      z-index: 1000;
+    }
     .skillListDetail{
       margin-top:1.3rem;
       .mui-input-row{

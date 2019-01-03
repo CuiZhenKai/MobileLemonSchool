@@ -55,11 +55,12 @@ export default {
   },
   methods: {
     login () {
-      // console.log("1");
-      // alert("1");
-      // this.mui.alert('欢迎使用Hello MUI', 'Hello MUI');
       if (!this.lemonnumber) {
         this.mui.toast('请输入用户名')
+        return
+      }
+      if(this.lemonnumber.length>=5){
+        this.mui.toast('用户名的长度不能超过4个')
         return
       }
       if (!this.lemonpass) {
@@ -84,15 +85,11 @@ export default {
       if (this.email) {
         let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
         let isRight = reg.test(this.email)
-        // console.log(isRight);
         if (!isRight) {
           this.mui.toast('邮箱格式不正确')
           return
         }
       }
-      // 全部信息输入完成
-      // 登录逻辑
-      // console.log("1");
       let data = {
         username: this.lemonnumber,
         userpass: this.lemonpass,
@@ -101,7 +98,6 @@ export default {
       }
       this.$http.post(`${config.host}/shops/Home/Login/register`, data)
         .then(result => {
-          // console.log(result.body.status,result.body.message);
           let code = result.body.status
           let message = result.body.message
           switch (code) {
@@ -113,7 +109,6 @@ export default {
               this.mui.toast(result.body.message)
           }
         }, (error) => {
-          // console.log(error);
           this.mui.toast('注册失败,网络服务器未知错误')
         })
     }
